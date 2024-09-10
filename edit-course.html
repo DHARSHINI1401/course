@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Educational Learning</title>
+    <link href="./style.css " rel="stylesheet" type="text/css" />
+    <link href="./responsive.css " rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            text-decoration: none;
+            outline: none !important;
+        }
+
+        .box-container a {
+            color: white;
+        }
+
+        .custom-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .pimg {
+            width: 50px;
+            border-radius: 50px;
+        }
+
+        .report-container {
+            margin: 0px;
+        }
+
+        i {
+            font-size: 30px;
+        }
+
+        .profile-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .pimg {
+            width: 40px;
+            border-radius: 50px;
+            height: 40px;
+        }
+
+        .username {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .sb {
+            height: 35px;
+            width: 200px;
+            margin-right: 10px;
+        }
+
+        .view-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #5500cb;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Dropdown Styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #3f0097;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            transition: max-height 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .nav-dropdown:hover .nav-dropdown-content {
+            display: block;
+            max-height: 300px;
+        }
+
+        .nav-dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-dropdown-content a:hover {
+            background-color: #6c3483;
+        }
+
+        /* Adjust logout button style */
+        .logout {
+            margin-top: 10px;
+        }
+
+        .nav-option {
+            margin-bottom: 10px;
+        }
+
+        .name {
+            font-weight: 20px;
+            font-color: black;
+        }
+
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-container .tooltip-text {
+            visibility: hidden;
+            width: 140px;
+            background-color: #410099;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            top: 125%;
+            /* Position below the icon */
+            left: 50%;
+            transform: translateX(-50%);
+            /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip-container .tooltip-text::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            /* Top of the tooltip */
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #410099 transparent;
+        }
+
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .nav li {
+            list-style: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown h3 {
+            color: #3f0097;
+        }
+
+        .dropdown-content {
+            display: none;
+            flex-direction: column;
+        }
+
+        .dropdown-content li {
+            border-top: none;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: flex;
+        }
+
+        .me {
+            font-family: "Poppins", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            padding-right: 10px;
+            padding-left: 5px;
+        }
+
+        .nav li {
+            list-style: none;
+            padding-bottom: 10px;
+            padding-right: 0px;
+            cursor: pointer;
+            margin-left: 0px;
+            padding-left: 0px;
+            transition: 2s;
+        }
+
+        .fa-poll:before,
+        .fa-square-poll-vertical:before {
+            content: "\f681";
+            padding-right: 20px;
+            margin-left: 0px;
+        }
+
+        .saran {
+            padding-right: 70px;
+        }
+
+        /* Chatbot styles */
+        .chatbot-frame {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #410099;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-icon i {
+            font-size: 24px;
+        }
+
+        .content-section {
+            background: #ffffff;
+            /* White background for the form */
+            border: 1px solid #ccc;
+            /* Light grey border */
+            border-radius: 8px;
+            /* Slightly rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            padding: 2rem;
+            max-width: 980px;
+            /* Narrower width for a classic look */
+            margin: auto;
+            font-size: 20px;
+        }
+
+        .content-section legend {
+            color: #333;
+            /* Darker text for the legend */
+            font-weight: bold;
+            font-size: 1.5rem;
+            /* Larger font size */
+            text-align: center;
+            margin-bottom: 20px;
+            /* Space below the legend */
+        }
+
+        .content-section p {
+            text-align: center;
+        }
+
+        .content-section .form-control {
+            margin-bottom: 15px;
+            border-radius: 4px;
+            /* Slightly less rounded */
+            border: 1px solid #aaa;
+            /* Grey border */
+            padding: 10px;
+            /* More padding for inputs */
+        }
+
+        .content-section .btn {
+            border-radius: 4px;
+            /* Match the input border radius */
+            background-color: #007bff;
+            /* Classic blue color */
+            color: white;
+            width: 100%;
+            padding: 12px;
+            /* Increased padding */
+            margin-bottom: 10px;
+            font-size: 1rem;
+            /* Larger font size */
+            transition: background-color 0.3s ease;
+            /* Smooth transition */
+        }
+
+        .content-section .btn:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        .content-section .btn-outline-info {
+            border: 1px solid #007bff;
+            /* Blue border */
+            color: #007bff;
+            background-color: transparent;
+        }
+
+        .content-section .btn-outline-info:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .content-section .border-top {
+            border-top: 1px solid #ccc;
+            /* Light grey border */
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        .content-section .text-muted a {
+            color: #007bff;
+            /* Classic link color */
+            text-decoration: none;
+        }
+
+        .content-section .text-muted a:hover {
+            text-decoration: underline;
+        }
+
+        /* course creation */
+
+        h1 {
+            text-align: center;
+            color: #2C6E49;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #410099;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            background-color: #f9f9f9;
+            width: 100%;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #410099;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #410099;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            align-self: center;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        button:hover {
+            background-color: #5f2fa1;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            background-color: #5f2fa1;
+            transform: translateY(0);
+        }
+
+        /* Styling for form inputs inside a grid */
+        .grid-two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Improve Select Menu Appearance */
+        select {
+            appearance: none;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMUw2IDZMMTEgMSIgc3Ryb2tlPSIjQUFBIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=') no-repeat right 10px center;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding-right: 30px;
+        }
+
+        /* Tooltip Help */
+        .tooltip {
+            position: relative;
+            cursor: help;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: #2C6E49;
+            color: #fff;
+            text-align: center;
+            padding: 8px;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            /* Show above the element */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* insert end  */
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-section {
+                padding: 1rem;
+                font-size: 18px;
+            }
+
+            .content-section legend {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+
+            .content-section .btn {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .content-section .btn-outline-info {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-section {
+                padding: 0.8rem;
+                font-size: 16px;
+            }
+
+            .content-section legend {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+
+            .content-section .btn {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+
+            .content-section .btn-outline-info {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+
+            .content-section .form-control {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- for header part -->
+    <header>
+        <div class="logosec">
+            <div class="logo">Travel Crew</div>
+            <i class="fa-solid fa-bars icn menuicn" id="menuicn" style="color: #410099"></i>
+        </div>
+
+        <!-- User profile section -->
+        <div class="message">
+
+
+            <a href="" class="tooltip-container">
+                <i class="fa-solid fa-note-sticky fa-beat" style="color: #410099"></i>
+                <span class="tooltip-text">Make Notes</span>
+            </a>
+
+            <a href="" class="tooltip-container">
+                <i class="fa-solid fa-magnifying-glass fa-bounce" style="color: #410099"></i>
+                <span class="tooltip-text">Search travel plans</span>
+            </a>
+
+            <a href="" class="tooltip-container">
+                <i class="fa-solid fa-bell fa-shake" style="color: #410099"></i>
+                <span class="tooltip-text">Notifications</span>
+            </a>
+
+            <a href="" class="profile-link">
+                <img class="pimg" src="" alt="{{ current_user.username }}" />
+                <b class="username"> something</b>
+            </a>
+
+
+            <div class="dp">
+                <a href="#">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                        class="dpicn" alt="dp" />
+                </a>
+            </div>
+
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+
+                    <a href="#">
+                        <div class="option2 nav-option">
+                            <i class="fa-solid fa-user-tie" style="color: #3f0097"></i>
+                            <h3>Admin</h3>
+                        </div>
+                    </a>
+
+                    <a href="#dashboard " class="custom-link">
+                        <div class="nav-option option1">
+                            <i class="fa-solid fa-chart-pie" style="color: white"></i>
+                            <h3>Dashboard</h3>
+                        </div>
+                    </a>
+                    <a href="#course_create ">
+                        <div class="option2 nav-option">
+                            <i class="fa-solid fa-earth-americas" style="color: #3f0097"></i>
+                            <h3>Create Course</h3>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="nav-option option3">
+                            <i class="fa-solid fa-file-pen" style="color: #3f0097"></i>
+                            <h3>Edit Course</h3>
+                        </div>
+                    </a>
+                    <a href="#course_list ">
+                        <div class="nav-option option4">
+                            <i class="fa-solid fa-pen-to-square" style="color: #3f0097"></i>
+                            <h3>all Course</h3>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="nav-option option5">
+                            <i class="fa-solid fa-bullhorn" style="color: #410099"></i>
+                            <h3>Enrolled Students</h3>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="nav-option option5">
+                            <i class="fa-solid fa-user-group" style="color: #3f0097"></i>
+                            <h3>Students Enroll</h3>
+                        </div>
+                    </a>
+                    <li class="dropdown">
+                        <i class="fa-solid fa-square-poll-vertical" style="color: #3f0097"><span class="me">My
+                                Trips</span><i class="fa-solid fa-caret-down saran" style="color: #410099;"></i>
+                        </i>
+
+                        <ul class="dropdown-content">
+                            <li>
+                                <a href="#">Upcoming Trips</a>
+                            </li>
+                            <li>
+                                <a href="#">Ongoing Trips</a>
+                            </li>
+                            <li>
+                                <a href="#">Completed Trips</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <a href="#homepage ">
+                        <div class="nav-option logout">
+                            <i class="fa-solid fa-gear" style="color: #410099;"></i>
+                            <h3>Settings</h3>
+                        </div>
+                    </a>
+
+
+
+
+                    <a href="#logout ">
+                        <div class="nav-option logout">
+                            <i class="fa-solid fa-right-from-bracket" style="color: #3f0097"></i>
+                            <h3>Logout</h3>
+                        </div>
+                    </a>
+
+
+
+
+
+                    <li class="dropdown">
+                        <i class="fa-solid fa-square-poll-vertical" style="color: #3f0097"><span
+                                class="me">Events</span><i class="fa-solid fa-caret-down saran"
+                                style="color: #410099;"></i>
+                        </i>
+
+                        <ul class="dropdown-content">
+                            <li>
+                                <a href="#">Create Events</a>
+                            </li>
+                            <li>
+                                <a href="#">Events Lists</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+                    <a href="#">
+                        <div class="nav-option logout">
+                            <i class="fa-solid fa-person-chalkboard" style="color: #410099;"></i>
+                            <h3>Local Guides</h3>
+                        </div>
+                    </a>
+
+
+
+
+
+                    <a href="#">
+                        <div class="nav-option logout">
+                            <i class="fa-solid fa-person-chalkboard" style="color: #410099;"></i>
+                            <h3>Local Guide creations</h3>
+                        </div>
+                    </a>
+
+                    <div class="nav-option logout">
+
+                        <a href="#">
+
+                            <img class="pimg" src="#" alt="#" />
+
+                            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                                class="nav-img" alt="profile" />
+
+                            <h3 class="name">{{ current_user.username }}</h3>
+                        </a>
+
+                        <p>{{username}}</p>
+
+                    </div>
+
+                    <div class="nav-option logout">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                            class="nav-img" alt="logout" />
+                        <a href="#login ">
+                            <h3>Login</h3>
+                        </a>
+                    </div>
+                    <div class="nav-option logout">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                            class="nav-img" alt="logout" />
+                        <a href="#register ">
+                            <h3>Sign Up</h3>
+                        </a>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+        <div class="main">
+
+            <div class="content-section">
+                <form id="courseForm">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required><br><br>
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+
+                    <label for="course_code">Course Code or ID:</label>
+                    <input type="text" id="course_code" name="course_code" required><br><br>
+
+                    <label for="instructor">Instructor:</label>
+                    <input type="text" id="instructor" name="instructor" required><br><br>
+
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" required><br><br>
+
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" required><br><br>
+
+                    <label for="level">Level:</label>
+                    <select id="level" name="level" required>
+                        <option selected disabled>Select</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="expert">Expert</option>
+                    </select><br><br>
+
+                    <label for="course_format">Course Format:</label>
+                    <select id="course_format" name="course_format" required>
+                        <option selected disabled>Select</option>
+                        <option value="live">Live</option>
+                        <option value="recorded">Recorded</option>
+                    </select><br><br>
+                    <!-- Hide the course materials section if "Live" is selected -->
+                    <div id="materials-section">
+                        <label for="course_materials">Course Materials:</label>
+                        <textarea id="course_materials" name="course_materials" rows="4" cols="50"></textarea><br><br>
+                    </div>
+
+                    <!-- Course objectives and prerequisites -->
+                    <label for="objectives">Course Objectives:</label>
+                    <textarea id="objectives" name="objectives" rows="4" cols="50" required></textarea><br><br>
+
+                    <label for="prerequisites">Prerequisites:</label>
+                    <textarea id="prerequisites" name="prerequisites" rows="4" cols="50"></textarea><br><br>
+
+                    <label for="course_layout">Course Layout:</label>
+                    <textarea id="course_layout" name="course_layout" rows="4" cols="50"></textarea><br><br>
+
+
+                    <!-- Submit button -->
+                    <button type="submit" onclick="saveCourse()">Save</button>
+                    <!-- Hidden Add Course button -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot iframe -->
+    <iframe class="chatbot-frame"
+        src="https://console.dialogflow.com/api-client/demo/embedded/676062d3-68b3-4bcb-a568-4585e18cb935"
+        id="chatbot-frame" title="Chatbot"></iframe>
+    <div class="chat-icon" id="chat-icon">
+        <i class="fa-solid fa-comment"></i>
+    </div>
+
+
+
+    <script type="text/javascript" src="./index.js"></script>
+    <script>
+        document
+            .querySelector(".dropdown")
+            .addEventListener("click", function () {
+                let dropdownContent = document.querySelector(".dropdown-content");
+                if (
+                    dropdownContent.style.display === "none" ||
+                    dropdownContent.style.display === ""
+                ) {
+                    dropdownContent.style.display = "flex";
+                } else {
+                    dropdownContent.style.display = "none";
+                }
+            });
+        document.getElementById('chat-icon').addEventListener('click', function () {
+            const chatbotFrame = document.getElementById('chatbot-frame');
+            if (chatbotFrame.style.display === 'none' || chatbotFrame.style.display === '') {
+                chatbotFrame.style.display = 'block';
+                chatbotFrame.style.transform = 'translateY(0)';
+            } else {
+                chatbotFrame.style.display = 'none';
+                chatbotFrame.style.transform = 'translateY(100%)';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
